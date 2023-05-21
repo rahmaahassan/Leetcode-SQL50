@@ -17,4 +17,3 @@ Write an SQL query to find the daily active user count for a period of 30 days e
 A user was active on someday if they made at least one activity on that day.
 Return the result table in any order.
 */
-
