@@ -18,10 +18,16 @@ The first order of a customer is the order with the earliest order date that the
 Write an SQL query to find the percentage of immediate orders in the first orders of all customers, rounded to 2 decimal places.
 */
 
-SELECT ROUND(SUM(CASE WHEN order_date = customer_pref_delivery_date THEN 1 ELSE 0 END) * 1.0 / COUNT(*) * 100, 2) immediate_percentage
-FROM Delivery
-WHERE order_date IN (
-    SELECT MIN(order_date)
-    FROM Delivery
-    GROUP BY customer_id
+WITH rm AS (
+    SELECT
+        customer_id,
+        order_date,
+        RANK() OVER (PARTITION BY customer_id ORDER BY order_date) AS r,
+        customer_pref_delivery_date
+    FROM
+        Delivery
 )
+
+SELECT ROUND(100 * 1.0 * SUM(CASE WHEN order_date = customer_pref_delivery_date THEN 1 ELSE 0 END) / COUNT(*), 2) immediate_percentage
+FROM rm
+WHERE r = 1
