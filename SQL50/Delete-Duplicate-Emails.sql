@@ -16,3 +16,6 @@ The driver will first compile and run your piece of code and then show the Perso
 The final order of the Person table does not matter.
 */
 
+DELETE A 
+FROM Person A, Person B 
+WHERE A.id > B.id AND A.email=B.email;
