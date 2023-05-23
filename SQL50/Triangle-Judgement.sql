@@ -14,3 +14,7 @@ Write an SQL query to report for every three line segments whether they can form
 Return the result table in any order.
 */
 
+SELECT x, y, z,
+  CASE WHEN x + y > z AND x + z > y AND y + z > x THEN 'Yes'
+  ELSE 'No' End as triangle
+FROM Triangle
