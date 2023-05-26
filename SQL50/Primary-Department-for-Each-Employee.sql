@@ -20,3 +20,16 @@ Write an SQL query to report all the employees with their primary department. Fo
 Return the result table in any order.
 */
 
+WITH CTE AS (
+    SELECT employee_id
+    FROM Employee
+    GROUP BY employee_id
+    HAVING COUNT(primary_flag) = 1
+)
+
+SELECT employee_id, department_id
+FROM Employee
+WHERE employee_id in (
+    SELECT *
+    FROM CTE
+) OR primary_flag = 'Y'
