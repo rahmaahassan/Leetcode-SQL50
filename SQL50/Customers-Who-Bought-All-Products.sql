@@ -21,3 +21,10 @@ Write an SQL query to report the customer ids from the Customer table that bough
 Return the result table in any order.
 */
 
+SELECT customer_id
+FROM Customer
+GROUP BY customer_id
+Having COUNT(product_key) in (
+    SELECT COUNT(*)
+    FROM Product
+)
