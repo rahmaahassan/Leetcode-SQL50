@@ -24,7 +24,7 @@ Return the result table in any order.
 SELECT customer_id
 FROM Customer
 GROUP BY customer_id
-Having COUNT(product_key) in (
-    SELECT COUNT(*)
+Having COUNT(DISTINCT product_key) in (
+    SELECT COUNT(DISTINCT product_key)
     FROM Product
 )
