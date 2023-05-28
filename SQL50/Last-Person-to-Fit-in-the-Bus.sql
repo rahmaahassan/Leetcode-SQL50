@@ -19,3 +19,17 @@ There is a queue of people waiting to board a bus. However, the bus has a weight
 Write an SQL query to find the person_name of the last person that can fit on the bus without exceeding the weight limit. 
 The test cases are generated such that the first person does not exceed the weight limit.
 */
+
+WITH CTE1 AS (
+  SELECT *, SUM(weight) OVER(ORDER BY TURN ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) running_sum
+  FROM Queue
+),
+CTE2 AS (
+  SELECT person_name, running_sum, DENSE_RANK() OVER(ORDER BY running_sum DESC) r
+  FROM CTE1
+  WHERE running_sum <= 1000
+)
+
+SELECT person_name
+FROM CTE2
+WHERE r = 1
