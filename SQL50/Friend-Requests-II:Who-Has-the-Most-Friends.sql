@@ -13,3 +13,11 @@ This table contains the ID of the user who sent the request, the ID of the user 
 Write an SQL query to find the people who have the most friends and the most friends number.
 The test cases are generated so that only one person has the most friends.
 */
+
+SELECT TOP 1 requester_id id, (
+    SELECT COUNT(*) 
+    FROM RequestAccepted b 
+    WHERE b.accepter_id = a.requester_id OR b.requester_id = a.requester_id
+) num
+FROM RequestAccepted a
+ORDER BY num DESC
