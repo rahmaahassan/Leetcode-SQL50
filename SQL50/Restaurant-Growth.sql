@@ -18,3 +18,15 @@ Write an SQL query to compute the moving average of how much the customer paid i
 Return result table ordered by visited_on in ascending order.
 */
 
+SELECT visited_on, SUM(SUM(amount)) 
+        OVER(
+        ORDER BY visited_on
+        ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) amount, 
+        ROUND(AVG(SUM(amount) * 1.0) 
+        OVER(
+        ORDER BY visited_on
+        ROWS BETWEEN 6 PRECEDING AND CURRENT ROW), 2) average_amount
+FROM Customer
+GROUP BY visited_on
+ORDER BY visited_on
+OFFSET 6 ROWS
