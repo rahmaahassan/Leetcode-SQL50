@@ -22,3 +22,14 @@ have the same tiv_2015 value as one or more other policyholders, and
 are not located in the same city like any other policyholder (i.e., the (lat, lon) attribute pairs must be unique).
 Round tiv_2016 to two decimal places.
 */
+
+WITH CTE AS (
+    SELECT *, 
+      COUNT(*) OVER (PARTITION BY TIV_2015) i2015, 
+      COUNT(*) OVER(PARTITION BY lat, lon) ilatlong
+    FROM Insurance
+)
+
+SELECT ROUND(SUM(tiv_2016), 2) tiv_2016
+FROM CTE
+WHERE i2015 >= 2 AND ilatlong = 1
