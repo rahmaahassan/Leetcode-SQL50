@@ -9,7 +9,7 @@ Table: Views
 | view_date     | date    |
 +---------------+---------+
 There is no primary key for this table, it may have duplicate rows.
-Each row of this table indicates that some viewer viewed an article (written by some author) on some date. 
+Each row of this table indicates that some viewers viewed an article (written by some author) on some date. 
 Note that equal author_id and viewer_id indicate the same person.
  
 Write an SQL query to find all the authors that viewed at least one of their own articles.
